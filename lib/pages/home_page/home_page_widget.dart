@@ -196,7 +196,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   ),
                             ),
                             subtitle: Text(
-                              columnReadCustomerRow.id.toString(),
+                              valueOrDefault<String>(
+                                columnReadCustomerRow.address,
+                                '-',
+                              ),
                               style: FlutterFlowTheme.of(context)
                                   .labelMedium
                                   .override(
