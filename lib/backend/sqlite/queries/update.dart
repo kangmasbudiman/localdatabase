@@ -37,7 +37,7 @@ Future performDeleteCustomer(
   int? id,
 }) {
   final query = '''
-delete form customer where id=$id
+delete from customer where id=$id
 ''';
   return database.rawQuery(query);
 }
