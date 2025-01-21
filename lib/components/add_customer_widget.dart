@@ -463,56 +463,165 @@ class _AddCustomerWidgetState extends State<AddCustomerWidget>
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     if (widget.isEdit ?? true)
-                                      Padding(
+                                      Flexible(
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 4.0, 0.0),
+                                          child: FFButtonWidget(
+                                            onPressed: () async {
+                                              var confirmDialogResponse =
+                                                  await showDialog<bool>(
+                                                        context: context,
+                                                        builder:
+                                                            (alertDialogContext) {
+                                                          return AlertDialog(
+                                                            title: const Text(
+                                                                'Delete Data'),
+                                                            content: const Text(
+                                                                'Are You Sure To Delete this data'),
+                                                            actions: [
+                                                              TextButton(
+                                                                onPressed: () =>
+                                                                    Navigator.pop(
+                                                                        alertDialogContext,
+                                                                        false),
+                                                                child: const Text(
+                                                                    'Cancel'),
+                                                              ),
+                                                              TextButton(
+                                                                onPressed: () =>
+                                                                    Navigator.pop(
+                                                                        alertDialogContext,
+                                                                        true),
+                                                                child: const Text(
+                                                                    'Confirm'),
+                                                              ),
+                                                            ],
+                                                          );
+                                                        },
+                                                      ) ??
+                                                      false;
+                                              if (confirmDialogResponse) {
+                                                await SQLiteManager.instance
+                                                    .deleteCustomer(
+                                                  id: widget.id,
+                                                );
+                                                Navigator.pop(context);
+                                              } else {
+                                                Navigator.pop(context);
+                                              }
+                                            },
+                                            text: 'Delete Customer',
+                                            icon: const Icon(
+                                              Icons.phonelink_erase,
+                                              size: 25.0,
+                                            ),
+                                            options: FFButtonOptions(
+                                              height: 50.0,
+                                              padding: const EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      32.0, 0.0, 32.0, 0.0),
+                                              iconAlignment: IconAlignment.end,
+                                              iconPadding: const EdgeInsetsDirectional
+                                                  .fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .error,
+                                              textStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleSmall
+                                                      .override(
+                                                        fontFamily:
+                                                            'Inter Tight',
+                                                        color: Colors.white,
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                              elevation: 2.0,
+                                              borderSide: const BorderSide(
+                                                color: Colors.transparent,
+                                                width: 1.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(40.0),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    Flexible(
+                                      child: Padding(
                                         padding: const EdgeInsetsDirectional.fromSTEB(
                                             0.0, 0.0, 4.0, 0.0),
                                         child: FFButtonWidget(
                                           onPressed: () async {
-                                            var confirmDialogResponse =
-                                                await showDialog<bool>(
-                                                      context: context,
-                                                      builder:
-                                                          (alertDialogContext) {
-                                                        return AlertDialog(
-                                                          title: const Text(
-                                                              'Delete Data'),
-                                                          content: const Text(
-                                                              'Are You Sure To Delete this data'),
-                                                          actions: [
-                                                            TextButton(
-                                                              onPressed: () =>
-                                                                  Navigator.pop(
-                                                                      alertDialogContext,
-                                                                      false),
-                                                              child: const Text(
-                                                                  'Cancel'),
-                                                            ),
-                                                            TextButton(
-                                                              onPressed: () =>
-                                                                  Navigator.pop(
-                                                                      alertDialogContext,
-                                                                      true),
-                                                              child: const Text(
-                                                                  'Confirm'),
-                                                            ),
-                                                          ],
-                                                        );
-                                                      },
-                                                    ) ??
-                                                    false;
-                                            if (confirmDialogResponse) {
+                                            if (widget.isEdit!) {
                                               await SQLiteManager.instance
-                                                  .deleteCustomer(
-                                                id: widget.id,
+                                                  .updateCustomer(
+                                                name: _model
+                                                    .nameTextController.text,
+                                                address: _model
+                                                    .addressTextController.text,
+                                                city: _model
+                                                    .cityTextController.text,
+                                                id: widget.id!,
                                               );
                                               Navigator.pop(context);
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                SnackBar(
+                                                  content: Text(
+                                                    'Update Success',
+                                                    style: TextStyle(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryText,
+                                                    ),
+                                                  ),
+                                                  duration: const Duration(
+                                                      milliseconds: 4000),
+                                                  backgroundColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .secondary,
+                                                ),
+                                              );
                                             } else {
+                                              await SQLiteManager.instance
+                                                  .insertCustomer(
+                                                name: _model
+                                                    .nameTextController.text,
+                                                address: _model
+                                                    .addressTextController.text,
+                                                city: _model
+                                                    .cityTextController.text,
+                                              );
                                               Navigator.pop(context);
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                SnackBar(
+                                                  content: Text(
+                                                    'Insert Success',
+                                                    style: TextStyle(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryText,
+                                                    ),
+                                                  ),
+                                                  duration: const Duration(
+                                                      milliseconds: 4000),
+                                                  backgroundColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .secondary,
+                                                ),
+                                              );
                                             }
                                           },
-                                          text: 'Delete Customer',
+                                          text: 'Create New Customer',
                                           icon: const Icon(
-                                            Icons.phonelink_erase,
+                                            Icons.add_box,
                                             size: 25.0,
                                           ),
                                           options: FFButtonOptions(
@@ -525,7 +634,7 @@ class _AddCustomerWidgetState extends State<AddCustomerWidget>
                                                 const EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 0.0, 0.0, 0.0),
                                             color: FlutterFlowTheme.of(context)
-                                                .error,
+                                                .primary,
                                             textStyle:
                                                 FlutterFlowTheme.of(context)
                                                     .titleSmall
@@ -542,105 +651,6 @@ class _AddCustomerWidgetState extends State<AddCustomerWidget>
                                             borderRadius:
                                                 BorderRadius.circular(40.0),
                                           ),
-                                        ),
-                                      ),
-                                    Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 4.0, 0.0),
-                                      child: FFButtonWidget(
-                                        onPressed: () async {
-                                          if (widget.isEdit!) {
-                                            await SQLiteManager.instance
-                                                .updateCustomer(
-                                              name: _model
-                                                  .nameTextController.text,
-                                              address: _model
-                                                  .addressTextController.text,
-                                              city: _model
-                                                  .cityTextController.text,
-                                              id: widget.id!,
-                                            );
-                                            Navigator.pop(context);
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              SnackBar(
-                                                content: Text(
-                                                  'Update Success',
-                                                  style: TextStyle(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primaryText,
-                                                  ),
-                                                ),
-                                                duration: const Duration(
-                                                    milliseconds: 4000),
-                                                backgroundColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondary,
-                                              ),
-                                            );
-                                          } else {
-                                            await SQLiteManager.instance
-                                                .insertCustomer(
-                                              name: _model
-                                                  .nameTextController.text,
-                                              address: _model
-                                                  .addressTextController.text,
-                                              city: _model
-                                                  .cityTextController.text,
-                                            );
-                                            Navigator.pop(context);
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              SnackBar(
-                                                content: Text(
-                                                  'Insert Success',
-                                                  style: TextStyle(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primaryText,
-                                                  ),
-                                                ),
-                                                duration: const Duration(
-                                                    milliseconds: 4000),
-                                                backgroundColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondary,
-                                              ),
-                                            );
-                                          }
-                                        },
-                                        text: 'Create New Customer',
-                                        icon: const Icon(
-                                          Icons.add_box,
-                                          size: 25.0,
-                                        ),
-                                        options: FFButtonOptions(
-                                          height: 50.0,
-                                          padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                  32.0, 0.0, 32.0, 0.0),
-                                          iconAlignment: IconAlignment.end,
-                                          iconPadding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 0.0, 0.0, 0.0),
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          textStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .titleSmall
-                                                  .override(
-                                                    fontFamily: 'Inter Tight',
-                                                    color: Colors.white,
-                                                    letterSpacing: 0.0,
-                                                  ),
-                                          elevation: 2.0,
-                                          borderSide: const BorderSide(
-                                            color: Colors.transparent,
-                                            width: 1.0,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(40.0),
                                         ),
                                       ),
                                     ),
