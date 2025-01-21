@@ -48,14 +48,25 @@ class _AddCustomerWidgetState extends State<AddCustomerWidget>
     super.initState();
     _model = createModel(context, () => AddCustomerModel());
 
-    _model.nameTextController ??= TextEditingController(text: widget.name);
+    _model.nameTextController ??= TextEditingController(
+        text: valueOrDefault<String>(
+      widget.name,
+      '-',
+    ));
     _model.nameFocusNode ??= FocusNode();
 
-    _model.cityTextController ??= TextEditingController(text: widget.city);
+    _model.cityTextController ??= TextEditingController(
+        text: valueOrDefault<String>(
+      widget.city,
+      '-',
+    ));
     _model.cityFocusNode ??= FocusNode();
 
-    _model.addressTextController ??=
-        TextEditingController(text: widget.address);
+    _model.addressTextController ??= TextEditingController(
+        text: valueOrDefault<String>(
+      widget.address,
+      '-',
+    ));
     _model.addressFocusNode ??= FocusNode();
 
     animationsMap.addAll({
