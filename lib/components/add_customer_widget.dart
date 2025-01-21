@@ -519,6 +519,26 @@ class _AddCustomerWidgetState extends State<AddCustomerWidget>
                                                   id: widget.id,
                                                 );
                                                 Navigator.pop(context);
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  SnackBar(
+                                                    content: Text(
+                                                      'Delete Success',
+                                                      style: TextStyle(
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primaryText,
+                                                      ),
+                                                    ),
+                                                    duration: const Duration(
+                                                        milliseconds: 4000),
+                                                    backgroundColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .tertiary,
+                                                  ),
+                                                );
                                               } else {
                                                 Navigator.pop(context);
                                               }
