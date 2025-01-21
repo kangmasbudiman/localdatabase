@@ -165,9 +165,18 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   child: AddCustomerWidget(
                                     isEdit: true,
                                     id: columnReadCustomerRow.id,
-                                    name: columnReadCustomerRow.name,
-                                    city: columnReadCustomerRow.city,
-                                    address: columnReadCustomerRow.address,
+                                    name: valueOrDefault<String>(
+                                      columnReadCustomerRow.name,
+                                      '-',
+                                    ),
+                                    city: valueOrDefault<String>(
+                                      columnReadCustomerRow.city,
+                                      '-',
+                                    ),
+                                    address: valueOrDefault<String>(
+                                      columnReadCustomerRow.address,
+                                      '-',
+                                    ),
                                   ),
                                 ),
                               );
