@@ -1,5 +1,6 @@
 import '/backend/sqlite/sqlite_manager.dart';
 import '/components/add_customer_widget.dart';
+import '/components/customer_list_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -141,85 +142,49 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                     final columnReadCustomerRow =
                         columnReadCustomerRowList[columnIndex];
                     return Builder(
-                      builder: (context) => InkWell(
-                        splashColor: Colors.transparent,
-                        focusColor: Colors.transparent,
-                        hoverColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                        onTap: () async {
-                          await showDialog(
-                            context: context,
-                            builder: (dialogContext) {
-                              return Dialog(
-                                elevation: 0,
-                                insetPadding: EdgeInsets.zero,
-                                backgroundColor: Colors.transparent,
-                                alignment: const AlignmentDirectional(0.0, 0.0)
-                                    .resolve(Directionality.of(context)),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    FocusScope.of(dialogContext).unfocus();
-                                    FocusManager.instance.primaryFocus
-                                        ?.unfocus();
-                                  },
-                                  child: AddCustomerWidget(
-                                    isEdit: true,
-                                    id: columnReadCustomerRow.id,
-                                    name: valueOrDefault<String>(
-                                      columnReadCustomerRow.name,
-                                      '-',
-                                    ),
-                                    city: valueOrDefault<String>(
-                                      columnReadCustomerRow.city,
-                                      '-',
-                                    ),
-                                    address: valueOrDefault<String>(
-                                      columnReadCustomerRow.address,
-                                      '-',
+                      builder: (context) => Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 5.0),
+                        child: InkWell(
+                          splashColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onTap: () async {
+                            await showDialog(
+                              context: context,
+                              builder: (dialogContext) {
+                                return Dialog(
+                                  elevation: 0,
+                                  insetPadding: EdgeInsets.zero,
+                                  backgroundColor: Colors.transparent,
+                                  alignment: const AlignmentDirectional(0.0, 0.0)
+                                      .resolve(Directionality.of(context)),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      FocusScope.of(dialogContext).unfocus();
+                                      FocusManager.instance.primaryFocus
+                                          ?.unfocus();
+                                    },
+                                    child: AddCustomerWidget(
+                                      isEdit: true,
+                                      id: columnReadCustomerRow.id,
+                                      name: columnReadCustomerRow.name,
+                                      city: columnReadCustomerRow.city,
+                                      address: columnReadCustomerRow.address,
                                     ),
                                   ),
-                                ),
-                              );
-                            },
-                          );
-                        },
-                        child: Material(
-                          color: Colors.transparent,
-                          child: ListTile(
-                            title: Text(
-                              columnReadCustomerRow.name,
-                              style: FlutterFlowTheme.of(context)
-                                  .titleLarge
-                                  .override(
-                                    fontFamily: 'Inter Tight',
-                                    letterSpacing: 0.0,
-                                  ),
-                            ),
-                            subtitle: Text(
-                              valueOrDefault<String>(
-                                columnReadCustomerRow.address,
-                                '-',
-                              ),
-                              style: FlutterFlowTheme.of(context)
-                                  .labelMedium
-                                  .override(
-                                    fontFamily: 'Inter',
-                                    letterSpacing: 0.0,
-                                  ),
-                            ),
-                            trailing: Icon(
-                              Icons.arrow_forward_ios_rounded,
-                              color: FlutterFlowTheme.of(context).secondaryText,
-                              size: 24.0,
-                            ),
-                            tileColor: FlutterFlowTheme.of(context)
-                                .secondaryBackground,
-                            dense: false,
-                            contentPadding: const EdgeInsetsDirectional.fromSTEB(
-                                12.0, 0.0, 12.0, 0.0),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
+                                );
+                              },
+                            );
+                          },
+                          child: CustomerListWidget(
+                            key: Key(
+                                'Keyxah_${columnIndex}_of_${columnReadCustomerRowList.length}'),
+                            name: columnReadCustomerRow.name,
+                            id: columnReadCustomerRow.id,
+                            address: columnReadCustomerRow.address,
+                            city: columnReadCustomerRow.city,
                           ),
                         ),
                       ),
