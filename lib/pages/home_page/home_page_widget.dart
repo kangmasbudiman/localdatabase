@@ -140,37 +140,75 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       (columnIndex) {
                     final columnReadCustomerRow =
                         columnReadCustomerRowList[columnIndex];
-                    return Material(
-                      color: Colors.transparent,
-                      child: ListTile(
-                        title: Text(
-                          columnReadCustomerRow.name,
-                          style:
-                              FlutterFlowTheme.of(context).titleLarge.override(
+                    return Builder(
+                      builder: (context) => InkWell(
+                        splashColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () async {
+                          await showDialog(
+                            context: context,
+                            builder: (dialogContext) {
+                              return Dialog(
+                                elevation: 0,
+                                insetPadding: EdgeInsets.zero,
+                                backgroundColor: Colors.transparent,
+                                alignment: const AlignmentDirectional(0.0, 0.0)
+                                    .resolve(Directionality.of(context)),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    FocusScope.of(dialogContext).unfocus();
+                                    FocusManager.instance.primaryFocus
+                                        ?.unfocus();
+                                  },
+                                  child: AddCustomerWidget(
+                                    isEdit: true,
+                                    id: columnReadCustomerRow.id,
+                                    name: columnReadCustomerRow.name,
+                                    city: columnReadCustomerRow.city,
+                                    address: columnReadCustomerRow.address,
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                        child: Material(
+                          color: Colors.transparent,
+                          child: ListTile(
+                            title: Text(
+                              columnReadCustomerRow.name,
+                              style: FlutterFlowTheme.of(context)
+                                  .titleLarge
+                                  .override(
                                     fontFamily: 'Inter Tight',
                                     letterSpacing: 0.0,
                                   ),
-                        ),
-                        subtitle: Text(
-                          columnReadCustomerRow.address,
-                          style:
-                              FlutterFlowTheme.of(context).labelMedium.override(
+                            ),
+                            subtitle: Text(
+                              columnReadCustomerRow.address,
+                              style: FlutterFlowTheme.of(context)
+                                  .labelMedium
+                                  .override(
                                     fontFamily: 'Inter',
                                     letterSpacing: 0.0,
                                   ),
-                        ),
-                        trailing: Icon(
-                          Icons.arrow_forward_ios_rounded,
-                          color: FlutterFlowTheme.of(context).secondaryText,
-                          size: 24.0,
-                        ),
-                        tileColor:
-                            FlutterFlowTheme.of(context).secondaryBackground,
-                        dense: false,
-                        contentPadding: const EdgeInsetsDirectional.fromSTEB(
-                            12.0, 0.0, 12.0, 0.0),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            trailing: Icon(
+                              Icons.arrow_forward_ios_rounded,
+                              color: FlutterFlowTheme.of(context).secondaryText,
+                              size: 24.0,
+                            ),
+                            tileColor: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
+                            dense: false,
+                            contentPadding: const EdgeInsetsDirectional.fromSTEB(
+                                12.0, 0.0, 12.0, 0.0),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                          ),
                         ),
                       ),
                     );
